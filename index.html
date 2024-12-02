@@ -5,39 +5,76 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ਕੋਸ਼</title>
   <script>
-    async function fetchMeaning() {
-      const word = document.getElementById('wordInput').value.trim();
-      const gurmukhiRegex = /^[\u0A00-\u0A7F]+$/; // Regex for Gurmukhi characters
+async function fetchMeaning() {
+  const word = document.getElementById('wordInput').value.trim();
+  const gurmukhiRegex = /^[\u0A00-\u0A7F]+$/; // Regex for Gurmukhi characters
 
-      document.getElementById('result').innerText = "";
-      document.getElementById('loading').style.display = "block";
+  document.getElementById('result').innerText = "";
+  document.getElementById('loading').style.display = "block";
 
-      if (!word || !gurmukhiRegex.test(word)) {
-        document.getElementById('loading').style.display = "none";
-        document.getElementById('result').innerText = "⚠️ Please enter a Gurmukhi word.";
-        return;
-      }
+  // Check if input is empty or contains invalid characters
+  if (!word) {
+    document.getElementById('loading').style.display = "none";
+    displayError("⚠️ Please enter a Punjabi word.");
+    return;
+  }
 
-      const scriptURL = "https://script.google.com/macros/s/AKfycbylAvvV65XJBJcX-sy4n5VLVU6NDoTXynYAidLng2avbR_dpUSysfZsj7CSb7-eWZGKww/exec";
+  // Split input into words by spaces
+  const words = word.split(/\s+/);
 
-      try {
-        const response = await fetch(`${scriptURL}?word=${encodeURIComponent(word)}`);
-        const meaning = await response.text();
+  // Check for non-Gurmukhi words and multiple Gurmukhi words
+  if (!words.every(w => gurmukhiRegex.test(w))) {
+    document.getElementById('loading').style.display = "none";
+    displayError("⚠️ Type Gurmukhi only.");
+    return;
+  }
 
-        document.getElementById('loading').style.display = "none";
-        if (meaning.trim() === "" || meaning.toLowerCase() === "no match found") {
-          document.getElementById('result').innerText = "No match found.";
-        } else {
-          document.getElementById('result').innerText = meaning;
-        }
-      } catch (error) {
-        document.getElementById('loading').style.display = "none";
-        document.getElementById('result').innerText = "Error fetching data.";
-      }
+  if (words.length > 1) {
+    document.getElementById('loading').style.display = "none";
+    displayError("⚠️ Enter a single word only.");
+    return;
+  }
+
+  // Fetch meaning from server
+  const scriptURL = "https://script.google.com/macros/s/AKfycbylAvvV65XJBJcX-sy4n5VLVU6NDoTXynYAidLng2avbR_dpUSysfZsj7CSb7-eWZGKww/exec";
+
+  try {
+    const response = await fetch(`${scriptURL}?word=${encodeURIComponent(word)}`);
+    const meaning = await response.text();
+
+    document.getElementById('loading').style.display = "none";
+    if (meaning.trim() === "" || meaning.toLowerCase() === "no match found") {
+      document.getElementById('result').innerText = "No match found.";
+    } else {
+      document.getElementById('result').innerText = meaning;
+      document.getElementById('result').style.color = ""; // Reset color for valid output
+      document.getElementById('result').style.textAlign = ""; // Reset alignment
     }
+  } catch (error) {
+    document.getElementById('loading').style.display = "none";
+    displayError("⚠️ Error fetching data.");
+  }
+}
+
+function displayError(message) {
+  const resultElement = document.getElementById('result');
+  resultElement.innerText = message;
+  resultElement.style.color = "red"; // Set text color to red
+  resultElement.style.textAlign = "center"; // Center-align text
+}
+
 
     function clearMessage() {
+      const input = document.getElementById('wordInput');
+      const clearIcon = document.querySelector('.clear-icon');
       document.getElementById('result').innerText = "";
+      clearIcon.style.display = input.value.trim() ? 'inline' : 'none';
+    }
+
+    function clearInput() {
+      const input = document.getElementById('wordInput');
+      input.value = "";
+      clearMessage();
     }
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -46,6 +83,8 @@
           fetchMeaning();
         }
       });
+
+      clearMessage();
     });
   </script>
   <style>
@@ -59,26 +98,46 @@
       text-align: center;
     }
     .search-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+    .input-wrapper {
       position: relative;
-      width: fit-content;
-      margin: 0 auto;
     }
     input {
       width: 200px;
-      padding: 10px 40px 10px 10px;
+      padding: 10px;
       font-size: 16px;
       border: 2px solid #006400;
       border-radius: 5px;
       outline: none;
     }
-    .search-icon {
+    .clear-icon {
       position: absolute;
       right: 10px;
       top: 50%;
       transform: translateY(-50%);
       cursor: pointer;
+      font-size: 18px;
       color: #006400;
-      font-size: 20px;
+      display: none;
+    }
+    .clear-icon:hover {
+      color: #228B22;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      color: white;
+      background-color: #006400;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #228B22;
     }
     .loading {
       display: none;
@@ -94,6 +153,13 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+    #result {
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 30px;
+      color: #333;
+    }
     .message {
       text-align: center;
       font-size: 18px;
@@ -104,13 +170,6 @@
       padding: 10px;
       background-color: #e6ffe6;
       border-radius: 8px;
-    }
-    #result {
-      text-align: center;
-      font-size: 18px;
-      font-weight: bold;
-      margin-top: 15px;
-      color: #4B0082;
     }
     p {
       font-size: 18px;
@@ -133,14 +192,15 @@
 <body>
   <h1>ਬਰਾੜ ਵਿਰਾਸਤੀ ਕੋਸ਼</h1>
   <div class="search-container">
-    <input type="text" id="wordInput" placeholder="Enter a word" oninput="clearMessage()">
-    <span class="search-icon" onclick="fetchMeaning()">🔍</span>
+    <div class="input-wrapper">
+      <input type="text" id="wordInput" placeholder="Enter a word" oninput="clearMessage()">
+      <span class="clear-icon" onclick="clearInput()">✖</span>
+    </div>
+    <button onclick="fetchMeaning()">Search</button>
   </div>
   <div class="loading" id="loading"></div>
   <p id="result"></p>
-  <br>
   <div class="message">ਪੰਜਾਬੀ ਕੋਸ਼ਕਾਰੀ ਪ੍ਰੋਜੈਕਟ</div>
-  <br>
-  <a href="https://t.me/Shabadshala" target="_blank">Visit ਸ਼ਬਦਸ਼ਾਲਾ</a>
+  <a href="https://t.me/Shabadshala" target="_blank">by ਸ਼ਬਦਸ਼ਾਲਾ</a>
 </body>
 </html>
