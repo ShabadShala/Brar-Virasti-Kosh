@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Brar ਪੰਜਾਬੀ Kosh</title>
+  <title>ਕੋਸ਼</title>
   <script>
     async function fetchMeaning() {
       const word = document.getElementById('wordInput').value.trim();
@@ -43,6 +43,15 @@
     function clearMessage() {
       document.getElementById('result').innerText = "";
     }
+
+    // Add event listener to trigger search on Enter key press
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("wordInput").addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          fetchMeaning();
+        }
+      });
+    });
   </script>
   <style>
     body {
@@ -86,7 +95,7 @@
     }
     .message {
       text-align: center;
-      font-size: 22px;
+      font-size: 18px;
       font-weight: bold;
       margin-top: 30px;
       color: #4B0082; /* Indigo color for elegance */
@@ -114,14 +123,14 @@
   </style>
 </head>
 <body>
-  <h1>Brar ਪੰਜਾਬੀ Kosh</h1>
+  <h1>ਬਰਾੜ ਵਿਰਾਸਤੀ ਕੋਸ਼</h1>
   <div style="text-align: center;">
     <input type="text" id="wordInput" placeholder="Enter a word" oninput="clearMessage()">
     <button onclick="fetchMeaning()">Search</button>
     <div class="loading" id="loading"></div>
     <p id="result"></p>
     <br>
-    <div class="message">ਪੰਜਾਬੀ ਸ਼ਬਦ-ਸੰਗ੍ਰਹਿ ਤੇ ਕੋਸ਼ਕਾਰੀ ਦਾ ਪ੍ਰੋਜੈਕਟ</div>
+    <div class="message">ਪੰਜਾਬੀ ਕੋਸ਼ਕਾਰੀ ਪ੍ਰੋਜੈਕਟ</div>
     <br>
     <a href="https://t.me/Shabadshala" target="_blank">Visit ਸ਼ਬਦਸ਼ਾਲਾ</a>
   </div>
