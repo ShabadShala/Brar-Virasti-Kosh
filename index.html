@@ -9,25 +9,21 @@
       const word = document.getElementById('wordInput').value.trim();
       const gurmukhiRegex = /^[\u0A00-\u0A7F]+$/; // Regex for Gurmukhi characters
 
-      // Clear previous result and show loading animation
       document.getElementById('result').innerText = "";
       document.getElementById('loading').style.display = "block";
 
-      // Validate input
       if (!word || !gurmukhiRegex.test(word)) {
         document.getElementById('loading').style.display = "none";
         document.getElementById('result').innerText = "⚠️ Please enter a Gurmukhi word.";
         return;
       }
 
-      // Replace with your Google Apps Script URL
-      const scriptURL = "https://script.google.com/macros/s/AKfycbylAvvV65XJBJcX-sy4n5VLVU6NDoTXynYAidLng2avbR_dpUSysfZsj7CSb7-eWZGKww/exec"; 
+      const scriptURL = "https://script.google.com/macros/s/AKfycbylAvvV65XJBJcX-sy4n5VLVU6NDoTXynYAidLng2avbR_dpUSysfZsj7CSb7-eWZGKww/exec";
 
       try {
         const response = await fetch(`${scriptURL}?word=${encodeURIComponent(word)}`);
         const meaning = await response.text();
 
-        // Hide loading animation and display result
         document.getElementById('loading').style.display = "none";
         if (meaning.trim() === "" || meaning.toLowerCase() === "no match found") {
           document.getElementById('result').innerText = "No match found.";
@@ -44,7 +40,6 @@
       document.getElementById('result').innerText = "";
     }
 
-    // Add event listener to trigger search on Enter key press
     document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("wordInput").addEventListener("keydown", (event) => {
         if (event.key === "Enter") {
@@ -56,34 +51,40 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f0f9e8; /* Very light green */
+      background-color: #f0f9e8;
       margin: 20px;
     }
     h1 {
-      color: #006400; /* Dark green */
+      color: #006400;
       text-align: center;
     }
+    .search-container {
+      position: relative;
+      width: fit-content;
+      margin: 0 auto;
+    }
     input {
-      width: 150px;
-      padding: 10px;
+      width: 200px;
+      padding: 10px 40px 10px 10px;
       font-size: 16px;
+      border: 2px solid #006400;
+      border-radius: 5px;
+      outline: none;
     }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      color: white;
-      background-color: #006400; /* Dark green */
-      border: none;
+    .search-icon {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
       cursor: pointer;
-    }
-    button:hover {
-      background-color: #228B22; /* Forest green */
+      color: #006400;
+      font-size: 20px;
     }
     .loading {
       display: none;
       margin: 20px auto;
-      border: 4px solid #f3f3f3; /* Light grey */
-      border-top: 4px solid #006400; /* Dark green */
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #006400;
       border-radius: 50%;
       width: 40px;
       height: 40px;
@@ -98,11 +99,18 @@
       font-size: 18px;
       font-weight: bold;
       margin-top: 30px;
-      color: #4B0082; /* Indigo color for elegance */
-      border: 2px solid #006400; /* Dark green */
+      color: #4B0082;
+      border: 2px solid #006400;
       padding: 10px;
-      background-color: #e6ffe6; /* Light green background */
+      background-color: #e6ffe6;
       border-radius: 8px;
+    }
+    #result {
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 15px;
+      color: #4B0082;
     }
     p {
       font-size: 18px;
@@ -124,15 +132,15 @@
 </head>
 <body>
   <h1>ਬਰਾੜ ਵਿਰਾਸਤੀ ਕੋਸ਼</h1>
-  <div style="text-align: center;">
+  <div class="search-container">
     <input type="text" id="wordInput" placeholder="Enter a word" oninput="clearMessage()">
-    <button onclick="fetchMeaning()">Search</button>
-    <div class="loading" id="loading"></div>
-    <p id="result"></p>
-    <br>
-    <div class="message">ਪੰਜਾਬੀ ਕੋਸ਼ਕਾਰੀ ਪ੍ਰੋਜੈਕਟ</div>
-    <br>
-    <a href="https://t.me/Shabadshala" target="_blank">Visit ਸ਼ਬਦਸ਼ਾਲਾ</a>
+    <span class="search-icon" onclick="fetchMeaning()">🔍</span>
   </div>
+  <div class="loading" id="loading"></div>
+  <p id="result"></p>
+  <br>
+  <div class="message">ਪੰਜਾਬੀ ਕੋਸ਼ਕਾਰੀ ਪ੍ਰੋਜੈਕਟ</div>
+  <br>
+  <a href="https://t.me/Shabadshala" target="_blank">Visit ਸ਼ਬਦਸ਼ਾਲਾ</a>
 </body>
 </html>
