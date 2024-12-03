@@ -5,64 +5,60 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ਕੋਸ਼</title>
   <script>
-async function fetchMeaning() {
-  const word = document.getElementById('wordInput').value.trim();
-  const gurmukhiRegex = /^[\u0A00-\u0A7F]+$/; // Regex for Gurmukhi characters
+    async function fetchMeaning() {
+      const word = document.getElementById('wordInput').value.trim();
+      const gurmukhiRegex = /^[\u0A00-\u0A7F]+$/; // Regex for Gurmukhi characters
 
-  document.getElementById('result').innerText = "";
-  document.getElementById('loading').style.display = "block";
+      document.getElementById('result').innerText = "";
+      document.getElementById('loading').style.display = "block";
 
-  // Check if input is empty or contains invalid characters
-  if (!word) {
-    document.getElementById('loading').style.display = "none";
-    displayError("⚠️ Please enter a Punjabi word.");
-    return;
-  }
+      if (!word) {
+        document.getElementById('loading').style.display = "none";
+        displayError("⚠️ Please enter a Punjabi word.");
+        return;
+      }
 
-  // Split input into words by spaces
-  const words = word.split(/\s+/);
+      const words = word.split(/\s+/);
 
-  // Check for non-Gurmukhi words and multiple Gurmukhi words
-  if (!words.every(w => gurmukhiRegex.test(w))) {
-    document.getElementById('loading').style.display = "none";
-    displayError("⚠️ Type Gurmukhi only.");
-    return;
-  }
+      if (!words.every(w => gurmukhiRegex.test(w))) {
+        document.getElementById('loading').style.display = "none";
+        displayError("⚠️ Type Gurmukhi only.");
+        return;
+      }
 
-  if (words.length > 1) {
-    document.getElementById('loading').style.display = "none";
-    displayError("⚠️ Enter a single word only.");
-    return;
-  }
+      if (words.length > 1) {
+        document.getElementById('loading').style.display = "none";
+        displayError("⚠️ Enter a single word only.");
+        return;
+      }
 
-  // Fetch meaning from server
-  const scriptURL = "https://script.google.com/macros/s/AKfycbx7XdHYVI8WA7pt9syFjKNIFpMl4W4v_7Ww9FuiytcIJErfhvHDHhsRm75Ep5jH-sjMUw/exec";
+      const scriptURL = "https://script.google.com/macros/s/AKfycbx7XdHYVI8WA7pt9syFjKNIFpMl4W4v_7Ww9FuiytcIJErfhvHDHhsRm75Ep5jH-sjMUw/exec";
 
-  try {
-    const response = await fetch(`${scriptURL}?word=${encodeURIComponent(word)}`);
-    const meaning = await response.text();
 
-    document.getElementById('loading').style.display = "none";
-    if (meaning.trim() === "" || meaning.toLowerCase() === "no match found") {
-      document.getElementById('result').innerText = "No match found.";
-    } else {
-      document.getElementById('result').innerText = meaning;
-      document.getElementById('result').style.color = ""; // Reset color for valid output
-      document.getElementById('result').style.textAlign = ""; // Reset alignment
+      try {
+        const response = await fetch(`${scriptURL}?word=${encodeURIComponent(word)}`);
+        const meaning = await response.text();
+
+        document.getElementById('loading').style.display = "none";
+        if (meaning.trim() === "" || meaning.toLowerCase() === "no match found") {
+          document.getElementById('result').innerText = "No match found.";
+        } else {
+          document.getElementById('result').innerText = meaning;
+          document.getElementById('result').style.color = "";
+          document.getElementById('result').style.textAlign = "";
+        }
+      } catch (error) {
+        document.getElementById('loading').style.display = "none";
+        displayError("⚠️ Error fetching data.");
+      }
     }
-  } catch (error) {
-    document.getElementById('loading').style.display = "none";
-    displayError("⚠️ Error fetching data.");
-  }
-}
 
-function displayError(message) {
-  const resultElement = document.getElementById('result');
-  resultElement.innerText = message;
-  resultElement.style.color = "red"; // Set text color to red
-  resultElement.style.textAlign = "center"; // Center-align text
-}
-
+    function displayError(message) {
+      const resultElement = document.getElementById('result');
+      resultElement.innerText = message;
+      resultElement.style.color = "red";
+      resultElement.style.textAlign = "center";
+    }
 
     function clearMessage() {
       const input = document.getElementById('wordInput');
@@ -85,6 +81,19 @@ function displayError(message) {
       });
 
       clearMessage();
+
+      // Disable right-click context menu
+      document.addEventListener("contextmenu", (event) => event.preventDefault());
+
+      // Disable text selection
+      document.body.style.userSelect = "none";
+
+      // Disable keyboard shortcuts
+      document.addEventListener("keydown", (event) => {
+        if (event.ctrlKey && (event.key === "u" || event.key === "c" || event.key === "s")) {
+          event.preventDefault();
+        }
+      });
     });
   </script>
   <style>
@@ -92,6 +101,7 @@ function displayError(message) {
       font-family: Arial, sans-serif;
       background-color: #f0f9e8;
       margin: 20px;
+      user-select: none; /* Disable text selection */
     }
     h1 {
       color: #006400;
