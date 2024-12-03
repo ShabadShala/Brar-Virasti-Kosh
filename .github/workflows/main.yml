@@ -1,6 +1,13 @@
+name: Update Counter
+
+on:
+  workflow_dispatch:  # Allows manual trigger from GitHub
+  repository_dispatch:  # Can be triggered via external API if needed
+
 jobs:
   update:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -27,4 +34,4 @@ jobs:
           git commit -m "Update counter to ${{ steps.read-counter.outputs.count }} + 1"
           git push
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Use the new token
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Using your GH_TOKEN secret for authentication
