@@ -17,11 +17,11 @@ jobs:
         run: |
           COUNTER=$(jq '.count' counter.json)
           echo "Current Count: $COUNTER"
-          echo "::set-output name=count::$COUNTER"
+          echo "count=$COUNTER" >> $GITHUB_ENV # Set as environment variable, not output
 
       - name: Update Counter
         run: |
-          NEW_COUNT=$(( ${{ steps.read-counter.outputs.count }} + 1 ))
+          NEW_COUNT=$(( ${{ env.count }} + 1 )) # Use environment variable
           echo "{ \"count\": $NEW_COUNT }" > counter.json
           echo "Updated Count: $NEW_COUNT"
 
@@ -30,5 +30,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add counter.json
-          git commit -m "Update counter to ${{ steps.read-counter.outputs.count }} + 1"
+          git commit -m "Update counter to $NEW_COUNT"
           git push
