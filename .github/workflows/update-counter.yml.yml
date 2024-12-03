@@ -1,21 +1,9 @@
-name: Update Counter
-
-on:
-  workflow_dispatch:
-  repository_dispatch:
-
 jobs:
   update:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-
-      - name: Set up Git user
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Read Counter File
         id: read-counter
@@ -31,10 +19,12 @@ jobs:
           echo "Updated Count: $NEW_COUNT"
 
       - name: Commit and Push Changes
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git remote set-url origin https://github.com/${{ github.repository }}
           git add counter.json
           git commit -m "Update counter to ${{ steps.read-counter.outputs.count }} + 1"
-          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }} HEAD:main
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Use the new token
