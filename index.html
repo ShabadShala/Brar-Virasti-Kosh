@@ -36,7 +36,7 @@ async function fetchMeaning() {
   }
 
   // Fetch meaning from server
-  const scriptURL = "https://script.google.com/macros/s/AKfycbylAvvV65XJBJcX-sy4n5VLVU6NDoTXynYAidLng2avbR_dpUSysfZsj7CSb7-eWZGKww/exec";
+  const scriptURL = "https://script.google.com/macros/s/AKfycbx7XdHYVI8WA7pt9syFjKNIFpMl4W4v_7Ww9FuiytcIJErfhvHDHhsRm75Ep5jH-sjMUw/exec";
 
   try {
     const response = await fetch(`${scriptURL}?word=${encodeURIComponent(word)}`);
