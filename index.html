@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>ਕੋਸ਼</title>
   <script>
     async function fetchMeaning() {
@@ -97,33 +97,41 @@
     });
   </script>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f0f9e8;
-      margin: 20px;
-      user-select: none; /* Disable text selection */
-    }
-    h1 {
-      color: #006400;
-      text-align: center;
-    }
-    .search-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-    }
+  body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f9e8;
+  margin: 0; /* Avoid extra margins causing overflow */
+  padding: 10px; /* Space around the content */
+  box-sizing: border-box; /* Include padding/borders in element width/height */
+}
+
+h1 {
+  color: #006400;
+  text-align: center;
+  font-size: 5vw; /* Adjust based on screen width */
+}
+
+.search-container {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  max-width: 100%; /* Prevent overflow */
+}
     .input-wrapper {
       position: relative;
     }
-    input {
-      width: 200px;
-      padding: 10px;
-      font-size: 16px;
-      border: 2px solid #006400;
-      border-radius: 5px;
-      outline: none;
-    }
+input {
+  width: 100%; /* Default to full width */
+  max-width: 300px; /* Set a maximum for larger screens */
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #006400;
+  border-radius: 5px;
+  outline: none;
+  box-sizing: border-box; /* Include padding in width */
+}
     .clear-icon {
       position: absolute;
       right: 10px;
@@ -137,15 +145,16 @@
     .clear-icon:hover {
       color: #228B22;
     }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      color: white;
-      background-color: #006400;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: #006400;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  max-width: 100%; /* Ensure button does not overflow */
+}
     button:hover {
       background-color: #228B22;
     }
@@ -170,17 +179,13 @@
       margin-top: 30px;
       color: #333;
     }
-    .message {
-      text-align: center;
-      font-size: 18px;
-      font-weight: bold;
-      margin-top: 30px;
-      color: #4B0082;
-      border: 2px solid #006400;
-      padding: 10px;
-      background-color: #e6ffe6;
-      border-radius: 8px;
-    }
+.message {
+  text-align: center;
+  font-size: 4vw; /* Adjust font size dynamically */
+  margin: 20px auto;
+  max-width: 90%; /* Prevent text from overflowing */
+  word-wrap: break-word; /* Wrap long text */
+}
     p {
       font-size: 18px;
       margin-top: 20px;
