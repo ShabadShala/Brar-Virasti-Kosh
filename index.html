@@ -96,43 +96,45 @@
       });
     });
   </script>
+
   <style>
-  body {
-    font-size: 16px; /* Base font size */
-  font-family: Arial, sans-serif;
-  background-color: #f0f9e8;
-  margin: 0; /* Avoid extra margins causing overflow */
-  padding: 10px; /* Space around the content */
-  box-sizing: border-box; /* Include padding/borders in element width/height */
-}
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f9e8;
+      margin: 0;
+      padding: 10px;
+      box-sizing: border-box;
+    }
 
-h1 {
-  color: #006400;
-  text-align: center;
-  font-size: 2rem; /* Adjust based on screen width */
-}
+    h1 {
+      color: #006400;
+      text-align: center;
+      font-size: 3rem; /* Default for medium screens */
+    }
 
-.search-container {
-  display: flex;
-  flex-wrap: wrap; /* Allow wrapping on smaller screens */
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  max-width: 100%; /* Prevent overflow */
-}
+    .search-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
     .input-wrapper {
       position: relative;
     }
-input {
-  width: 100%; /* Default to full width */
-  max-width: 150px; /* Set a maximum for larger screens */
-  padding: 10px;
-  font-size: 16px;
-  border: 2px solid #006400;
-  border-radius: 5px;
-  outline: none;
-  box-sizing: border-box; /* Include padding in width */
-}
+
+    input {
+      width: 100%;
+      max-width: 300px;
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #006400;
+      border-radius: 5px;
+      outline: none;
+      box-sizing: border-box;
+    }
+
     .clear-icon {
       position: absolute;
       right: 10px;
@@ -143,22 +145,25 @@ input {
       color: #006400;
       display: none;
     }
+
     .clear-icon:hover {
       color: #228B22;
     }
-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  color: white;
-  background-color: #006400;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  max-width: 100%; /* Ensure button does not overflow */
-}
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      color: white;
+      background-color: #006400;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
     button:hover {
       background-color: #228B22;
     }
+
     .loading {
       display: none;
       margin: 20px auto;
@@ -169,10 +174,12 @@ button {
       height: 40px;
       animation: spin 1s linear infinite;
     }
+
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+
     #result {
       text-align: center;
       font-size: 18px;
@@ -180,30 +187,62 @@ button {
       margin-top: 30px;
       color: #333;
     }
-.message {
-  text-align: center;
-  font-size: 4vw; /* Adjust font size dynamically */
-  margin: 20px auto;
-  max-width: 90%; /* Prevent text from overflowing */
-  word-wrap: break-word; /* Wrap long text */
-}
+
+    .message {
+      text-align: center;
+      font-size: 1.5rem;
+      margin: 20px auto;
+      max-width: 90%;
+      word-wrap: break-word;
+    }
+
     p {
-      font-size: 18px;
+      font-size: 16px;
       margin-top: 20px;
       color: #333;
     }
+
     a {
       display: block;
       text-align: center;
       margin-top: 20px;
-      font-size: 18px;
+      font-size: 16px;
       text-decoration: none;
       color: #006400;
     }
+
     a:hover {
       text-decoration: underline;
     }
+
+    /* Larger screens (desktops) */
+    @media (min-width: 1024px) {
+      h1 {
+        font-size: 4rem;
+      }
+      input, button {
+        font-size: 18px;
+      }
+      .message {
+        font-size: 1.8rem;
+      }
+    }
+
+    /* Smaller screens (mobile) */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+      input, button {
+        font-size: 14px;
+      }
+      .message {
+        font-size: 1.2rem;
+      }
+    }
   </style>
+
+
 </head>
 <body>
   <h1>ਬਰਾੜ ਵਿਰਾਸਤੀ ਕੋਸ਼</h1>
