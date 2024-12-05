@@ -71,6 +71,7 @@
       const input = document.getElementById('wordInput');
       input.value = "";
       clearMessage();
+ input.focus();
     }
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -256,7 +257,8 @@
   <div class="loading" id="loading"></div>
   <p id="result"></p>
 
-<div class="message" style="font-size: 1rem; text-align: center; line-height:.8;border-top: 1px solid #000; padding-top: 15px;">
+<div class="message" style="font-size: 1rem; text-align: center; line-height: .8; border-top: 1px solid #000; padding-top: 20px; max-width: 200px; margin: 0 auto;">
+
   ਪੰਜਾਬੀ ਕੋਸ਼ਕਾਰੀ ਪ੍ਰੋਜੈਕਟ<br>
   <a href="https://t.me/Shabadshala" target="_blank" style="; color: #0000EE; text-decoration: none;">by ਸ਼ਬਦਸ਼ਾਲਾ</a>
 </div>
