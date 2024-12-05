@@ -98,7 +98,7 @@
     });
   </script>
 
-  <style>
+ <style>
   body {
     font-family: Arial, sans-serif;
     background-color: #f0f9e8;
@@ -110,26 +110,23 @@
   h1 {
     color: #006400;
     text-align: center;
-    font-size: 3rem; /* Default for medium screens */
+    font-size: 1.5rem; /* Default for medium screens */
   }
 
   .search-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px; /* Optional: Adjust the gap between input and button */
-    width: 100%;
-    flex-wrap: nowrap; /* Ensures no wrapping of input and button */
+    gap: 10px; /* Space between input and button */
   }
 
   .input-wrapper {
     position: relative;
-    width: 25%;
-    max-width: 75%; /* Adjust max-width as needed */
+    width: 150px; /* Fixed width for the input box */
   }
 
   input {
-    width: 100%;
+    width: 100%; /* Takes up the full width of its parent (150px) */
     padding: 10px;
     font-size: 16px;
     border: 2px solid #006400;
