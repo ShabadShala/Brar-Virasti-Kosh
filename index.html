@@ -113,12 +113,12 @@
     font-size: 1.5rem; /* Default for medium screens */
   }
 
-  .search-container {
+.search-container {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 10px; /* Space between input and button */
-  }
+}
 
   .input-wrapper {
     position: relative;
@@ -180,13 +180,22 @@
     100% { transform: rotate(360deg); }
   }
 
-  #result {
+#result {
     text-align: center;
     font-size: 18px;
     font-weight: bold;
     margin-top: 30px;
     color: #333;
-  }
+    width: 100%; /* Default width for smaller devices */
+}
+
+@media (min-width: 768px) { /* Adjust this breakpoint as needed */
+    #result {
+        width: 50%; /* Set width to 50% on desktop-sized screens */
+        margin: 30px auto; /* Center the element horizontally */
+    }
+}
+
 
   .message {
     text-align: center;
@@ -197,7 +206,7 @@
   }
 
   p {
-    font-size: 12px;
+    font-size: 16px;
     margin-top: 20px;
     color: #333;
   }
@@ -206,7 +215,7 @@
     display: block;
     text-align: center;
     margin-top: 20px;
-    font-size: 12px;
+    font-size: 16px;
     text-decoration: none;
     color: #006400;
   }
