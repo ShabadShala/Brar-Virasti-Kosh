@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>ਕੋਸ਼</title>
   <script>
+
     async function fetchMeaning() {
       const word = document.getElementById('wordInput').value.trim();
       const gurmukhiRegex = /^[\u0A00-\u0A7F]+$/; // Regex for Gurmukhi characters
@@ -182,7 +183,7 @@
 
 #result {
     text-align: center;
-    font-size: 10px;
+    font-size: 12px;
     font-weight: bold;
     margin-top: 30px;
     color: #333;
@@ -258,7 +259,7 @@
   <h1>ਬਰਾੜ ਵਿਰਾਸਤੀ ਕੋਸ਼</h1>
   <div class="search-container">
     <div class="input-wrapper">
-      <input type="text" id="wordInput" placeholder="Enter a word" oninput="clearMessage()">
+      <input type="text" id="wordInput" placeholder="Enter word" oninput="clearMessage()">
       <span class="clear-icon" onclick="clearInput()">✖</span>
     </div>
     <button onclick="fetchMeaning()">Search</button>
@@ -272,6 +273,20 @@
 
 
 </div>
+
+
+</script>
+<script>
+    document.getElementById("wordInput").addEventListener("input", function (event) {
+        // Gurmukhi Unicode range: U+0A00 to U+0A7F
+        const validGurmukhiRegex = /^[\u0A00-\u0A7F]*$/;
+
+        // Filter out invalid characters
+        if (!validGurmukhiRegex.test(this.value)) {
+            this.value = this.value.replace(/[^\u0A00-\u0A7F]/g, "");
+        }
+    });
+</script>
 
 </body>
 </html>
