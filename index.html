@@ -188,17 +188,19 @@
     margin-top: 30px;
     color: #333;
     width: 100%; /* Default width for smaller devices */
-    white-space: nowrap; /* Prevent text wrapping */
-    overflow: hidden; /* Ensure text doesn't overflow the container */
-    text-overflow: ellipsis; /* Show ellipsis (...) if text is too long */
+    line-height: 1.6; /* Comfortable line spacing for paragraphs */
+    word-wrap: break-word; /* Ensure long words break to the next line */
+    white-space: normal; /* Allow text to wrap within the container */
 }
+
 @media (min-width: 768px) { /* Adjust this breakpoint as needed */
     #result {
-	font-size: 18px; /* Larger font size for desktop screens */
+        font-size: 18px; /* Larger font size for desktop screens */
         width: 50%; /* Set width to 50% on desktop-sized screens */
         margin: 30px auto; /* Center the element horizontally */
     }
 }
+
 
 
   .message {
