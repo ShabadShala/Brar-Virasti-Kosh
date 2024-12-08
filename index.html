@@ -13,11 +13,6 @@
       document.getElementById('result').innerText = "";
       document.getElementById('loading').style.display = "block";
 
-      if (!word) {
-        document.getElementById('loading').style.display = "none";
-        displayError("⚠️ Please enter a Punjabi word.");
-        return;
-      }
 
       const words = word.split(/\s+/);
 
@@ -188,6 +183,10 @@
     margin-top: 30px;
     color: #333;
     width: 100%; /* Default width for smaller devices */
+    line-height: 1.6; /* Comfortable line spacing for paragraphs */
+    word-wrap: break-word; /* Ensure long words break to the next line */
+    white-space: normal; /* Allow text to wrap within the container */
+    overflow-wrap: break-word; /* Ensures the text wraps properly */
 }
 
 @media (min-width: 768px) { /* Adjust this breakpoint as needed */
@@ -195,6 +194,15 @@
         font-size: 18px; /* Larger font size for desktop screens */
         width: 50%; /* Set width to 50% on desktop-sized screens */
         margin: 30px auto; /* Center the element horizontally */
+    }
+}
+
+@media (max-width: 768px) { /* Ensure consistency on smaller screens */
+    #result {
+        font-size: 16px; /* Ensuring font size doesn't shrink too small */
+        width: 100%; /* Full width for mobile screens */
+        margin-top: 20px; /* Slight margin at the top */
+        line-height: 1.4; /* Adjust line spacing for better readability */
     }
 }
 
@@ -282,11 +290,22 @@
         // Gurmukhi Unicode range: U+0A00 to U+0A7F
         const validGurmukhiRegex = /^[\u0A00-\u0A7F]*$/;
 
-        // Filter out invalid characters
+        // Check if the input contains non-Gurmukhi characters
         if (!validGurmukhiRegex.test(this.value)) {
+            // Remove non-Gurmukhi characters
             this.value = this.value.replace(/[^\u0A00-\u0A7F]/g, "");
+
+            // Display error message
+            document.getElementById('loading').style.display = "none";
+            displayError("⚠️ Please enter Punjabi only.");
+        } else {
+            // Optionally hide the error message when valid input is detected
+            document.getElementById('loading').style.display = "none";
+            // You can clear the error message here if needed
         }
     });
 </script>
+
+
 </body>
 </html>
