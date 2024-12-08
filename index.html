@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>ਕੋਸ਼</title>
   <script>
+
     async function fetchMeaning() {
       const word = document.getElementById('wordInput').value.trim();
       const gurmukhiRegex = /^[\u0A00-\u0A7F]+$/; // Regex for Gurmukhi characters
@@ -12,29 +13,24 @@
       document.getElementById('result').innerText = "";
       document.getElementById('loading').style.display = "block";
 
+      if (!word) {
+        document.getElementById('loading').style.display = "none";
+        displayError("⚠️ Please enter a word.");
+        return;
+      }
+
       const words = word.split(/\s+/);
 
-      if (!words.every(w => gurmukhiRegex.test(w))) {
-        document.getElementById('loading').style.display = "none";
-        displayError("⚠️ Type Gurmukhi only.");
-        return;
-      }
-
-      if (words.length > 1) {
-        document.getElementById('loading').style.display = "none";
-        displayError("⚠️ Enter a single word only.");
-        return;
-      }
-
       const scriptURL = "https://script.google.com/macros/s/AKfycbx7XdHYVI8WA7pt9syFjKNIFpMl4W4v_7Ww9FuiytcIJErfhvHDHhsRm75Ep5jH-sjMUw/exec";
+
 
       try {
         const response = await fetch(`${scriptURL}?word=${encodeURIComponent(word)}`);
         const meaning = await response.text();
 
         document.getElementById('loading').style.display = "none";
-        if (meaning.trim() === "" || meaning.toLowerCase() === "no match found") {
-          document.getElementById('result').innerText = "No match found.";
+        if (meaning.trim() === "" || meaning.toLowerCase() === "Word not found") {
+          document.getElementById('result').innerText = "Word not found.";
         } else {
           document.getElementById('result').innerText = meaning;
           document.getElementById('result').style.color = "";
@@ -64,7 +60,7 @@
       const input = document.getElementById('wordInput');
       input.value = "";
       clearMessage();
-      input.focus();
+ input.focus();
     }
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -91,175 +87,165 @@
     });
   </script>
 
-  <style>
-    html {
-      -webkit-text-size-adjust: 100%;
-    }
+ <style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f9e8;
+    margin: 0;
+    padding: 10px;
+    box-sizing: border-box;
+  }
 
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f0f9e8;
-      margin: 0;
-      padding: 10px;
-      box-sizing: border-box;
-    }
+  h1 {
+    color: #006400;
+    text-align: center;
+    font-size: 1.5rem; /* Default for medium screens */
+  }
 
-    h1 {
-      color: #006400;
-      text-align: center;
-      font-size: 1.5rem;
-    }
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Space between input and button */
+}
 
-    .search-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-    }
+  .input-wrapper {
+    position: relative;
+    width: 150px; /* Fixed width for the input box */
+  }
 
-    .input-wrapper {
-      position: relative;
-      width: 100%;
-      max-width: 250px;
-    }
+  input {
+    width: 100%; /* Takes up the full width of its parent (150px) */
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #006400;
+    border-radius: 5px;
+    outline: none;
+    box-sizing: border-box;
+  }
 
-    input {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      border: 2px solid #006400;
-      border-radius: 5px;
-      outline: none;
-      box-sizing: border-box;
-    }
+  .clear-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: #006400;
+    display: none;
+  }
 
-    .clear-icon {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
-      font-size: 18px;
-      color: #006400;
-      display: none;
-    }
+  .clear-icon:hover {
+    color: #228B22;
+  }
 
-    .clear-icon:hover {
-      color: #228B22;
-    }
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #006400;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
 
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      color: white;
-      background-color: #006400;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
+  button:hover {
+    background-color: #228B22;
+  }
 
-    button:hover {
-      background-color: #228B22;
-    }
+  .loading {
+    display: none;
+    margin: 20px auto;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #006400;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+  }
 
-    .loading {
-      display: none;
-      margin: 20px auto;
-      border: 4px solid #f3f3f3;
-      border-top: 4px solid #006400;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
-    }
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+#result {
+    text-align: center;
+    font-size: 14px; /* Fixed font size */
+    font-weight: bold;
+    margin-top: 30px;
+    color: #333;
+    width: 100%; /* Default width for smaller devices */
+    line-height: 1.6; /* Comfortable line spacing for paragraphs */
+    word-wrap: break-word; /* Ensure long words break to the next line */
+    white-space: normal; /* Allow text to wrap within the container */
+}
 
+@media (min-width: 768px) { /* Adjust this breakpoint as needed */
     #result {
-      text-align: center;
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: #333;
-      line-height: 1.6;
-      word-wrap: break-word;
-      white-space: normal;
-      overflow-wrap: break-word;
-      padding: 20px;
-      margin-top: 30px;
-      max-width: 90%;
-      margin-left: auto;
-      margin-right: auto;
+        font-size: 18px; /* Larger font size for desktop screens */
+        width: 50%; /* Set width to 50% on desktop-sized screens */
+        margin: 30px auto; /* Center the element horizontally */
     }
+}
 
-    @media (min-width: 768px) {
-      #result {
-        font-size: 1.375rem;
-        padding: 30px;
-        max-width: 60%;
-      }
+
+
+  .message {
+    text-align: center;
+    font-size: 1.5rem;
+    margin: 20px auto;
+    max-width: 90%;
+    word-wrap: break-word;
+  }
+
+  p {
+    font-size: 16px;
+    margin-top: 20px;
+    color: #333;
+  }
+
+  a {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 16px;
+    text-decoration: none;
+    color: #006400;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  /* Larger screens (desktops) */
+  @media (min-width: 1024px) {
+    h1 {
+      font-size: 2rem;
     }
-
-    @media (max-width: 768px) {
-      #result {
-        font-size: 1rem;
-        padding: 15px;
-        max-width: 90%;
-        margin-top: 20px;
-      }
+    input, button {
+      font-size: 18px;
     }
-
     .message {
-      text-align: center;
+      font-size: 1.8rem;
+    }
+  }
+
+  /* Smaller screens (mobile) */
+  @media (max-width: 768px) {
+    h1 {
       font-size: 1.5rem;
-      margin: 20px auto;
-      max-width: 90%;
-      word-wrap: break-word;
     }
+    input, button {
+      font-size: 14px;
+    }
+    .message {
+      font-size: 1.2rem;
+    }
+  }
+</style>
 
-    p {
-      margin: 0;
-    }
 
-    a {
-      display: block;
-      text-align: center;
-      margin-top: 20px;
-      font-size: 16px;
-      text-decoration: none;
-      color: #006400;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    @media (min-width: 1024px) {
-      h1 {
-        font-size: 2rem;
-      }
-      input, button {
-        font-size: 18px;
-      }
-      .message {
-        font-size: 1.8rem;
-      }
-    }
-
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 1.5rem;
-      }
-      input, button {
-        font-size: 14px;
-      }
-      .message {
-        font-size: 1.2rem;
-      }
-    }
-  </style>
 </head>
 <body>
   <h1>ਬਰਾੜ ਵਿਰਾਸਤੀ ਕੋਸ਼</h1>
@@ -271,12 +257,38 @@
     <button onclick="fetchMeaning()">Search</button>
   </div>
   <div class="loading" id="loading"></div>
-  <p id="result" style="font-size: 18px;"></p>
+  <p id="result"></p>
+
+<div class="message" style="font-size: 1rem; text-align: center; line-height: .5; border-top: 1px solid #000; padding-top: 20px; max-width: 200px; margin: 0 auto;">
+  ਪੰਜਾਬੀ ਕੋਸ਼ਕਾਰੀ ਪ੍ਰੋਜੈਕਟ<br>
+  <a href="https://t.me/Shabadshala" target="_blank" style="; color: #0000EE; text-decoration: none;">by ਸ਼ਬਦਸ਼ਾਲਾ</a>
 
 
-  <div class="message" style="font-size: 1rem; text-align: center; line-height: .5; border-top: 1px solid #000; padding-top: 20px; max-width: 200px; margin: 0 auto;">
-    ਪੰਜਾਬੀ ਕੋਸ਼ਕਾਰੀ ਪ੍ਰੋਜੈਕਟ<br>
-    <a href="https://t.me/Shabadshala" target="_blank" style="color: #0000EE; text-decoration: none;">by ਸ਼ਬਦਸ਼ਾਲਾ</a>
-  </div>
+</div>
+
+
+</script>
+<script>
+    document.getElementById("wordInput").addEventListener("input", function (event) {
+        // Gurmukhi Unicode range: U+0A00 to U+0A7F
+        const validGurmukhiRegex = /^[\u0A00-\u0A7F]*$/;
+
+        // Check if the input contains non-Gurmukhi characters
+        if (!validGurmukhiRegex.test(this.value)) {
+            // Remove non-Gurmukhi characters
+            this.value = this.value.replace(/[^\u0A00-\u0A7F]/g, "");
+
+            // Display error message
+            document.getElementById('loading').style.display = "none";
+            displayError("⚠️ Punjabi letters only.");
+        } else {
+            // Optionally hide the error message when valid input is detected
+            document.getElementById('loading').style.display = "none";
+            // You can clear the error message here if needed
+        }
+    });
+</script>
+
+
 </body>
 </html>
