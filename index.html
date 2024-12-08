@@ -183,13 +183,15 @@
 
 #result {
     text-align: center;
-    font-size: 12px;
+    font-size: 14px; /* Fixed font size */
     font-weight: bold;
     margin-top: 30px;
     color: #333;
     width: 100%; /* Default width for smaller devices */
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; /* Ensure text doesn't overflow the container */
+    text-overflow: ellipsis; /* Show ellipsis (...) if text is too long */
 }
-
 @media (min-width: 768px) { /* Adjust this breakpoint as needed */
     #result {
 	font-size: 18px; /* Larger font size for desktop screens */
@@ -287,6 +289,5 @@
         }
     });
 </script>
-
 </body>
 </html>
