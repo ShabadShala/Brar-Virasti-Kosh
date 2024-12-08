@@ -178,33 +178,36 @@
 
 #result {
     text-align: center;
-    font-size: 14px; /* Default font size */
+    font-size: 18px; /* Default font size for larger screens */
     font-weight: bold;
-    margin-top: 30px;
     color: #333;
-    width: 100%; /* Default width for smaller devices */
-    line-height: 1.6; /* Comfortable line spacing for paragraphs */
-    word-wrap: break-word; /* Ensure long words break to the next line */
-    white-space: normal; /* Allow text to wrap within the container */
-    overflow-wrap: break-word; /* Ensures the text wraps properly */
-    padding: 10px; /* Add some padding to improve readability */
+    line-height: 1.6;
+    word-wrap: break-word;
+    white-space: normal;
+    overflow-wrap: break-word;
+    padding: 20px;
+    margin-top: 30px;
+    max-width: 90%; /* Maximum width of the container */
+    margin-left: auto; 
+    margin-right: auto; /* Center the container */
 }
 
+/* For screens wider than 768px */
 @media (min-width: 768px) {
     #result {
-        font-size: 18px; /* Larger font size for desktop screens */
-        width: 50%; /* Set width to 50% on desktop-sized screens */
-        margin: 30px auto; /* Center the element horizontally */
+        font-size: 22px; /* Larger font size for larger screens */
+        padding: 30px;
+        max-width: 60%; /* Adjust the width to fit better on desktop */
     }
 }
 
+/* For smaller screens (phones, etc.) */
 @media (max-width: 768px) {
     #result {
-        font-size: 16px; /* Ensure consistency in font size for mobile */
-        width: 90%; /* Allow the result to take more width on mobile */
-        margin-top: 20px; /* Slight margin at the top */
-        line-height: 1.4; /* Adjust line spacing for better readability */
-        padding: 15px; /* Add padding on mobile to improve layout */
+        font-size: 16px; /* Smaller font size for mobile devices */
+        padding: 15px;
+        max-width: 90%; /* Adjust the width for mobile */
+        margin-top: 20px;
     }
 }
 
