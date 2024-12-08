@@ -197,21 +197,21 @@
 }
 
 /* For screens wider than 768px */
-@media (min-width: 768px) {
-    #result {
-        font-size: 22px; /* Larger font size for larger screens */
-        padding: 30px;
-        max-width: 60%; /* Adjust the width to fit better on desktop */
-    }
-}
+    @media (min-width: 768px) {
+          #result {
+              font-size: 1.375rem; /* Larger font size for larger screens */
+              padding: 30px;
+              max-width: 60%; /* Adjust the width to fit better on desktop */
+          }
+      }
 
-/* For smaller screens (phones, etc.) */
-@media (max-width: 768px) {
-    #result {
-        font-size: 16px; /* Smaller font size for mobile devices */
-        padding: 15px;
-        max-width: 90%; /* Adjust the width for mobile */
-        margin-top: 20px;
+      /* For smaller screens (phones, etc.) */
+      @media (max-width: 768px) {
+          #result {
+              font-size: 1rem; /* Smaller font size for mobile devices */
+              padding: 15px;
+              max-width: 90%; /* Adjust the width for mobile */
+              margin-top: 20px;
     }
 }
 
