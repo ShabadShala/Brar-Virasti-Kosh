@@ -21,7 +21,7 @@
 
       const words = word.split(/\s+/);
 
-      const scriptURL = "https://script.google.com/macros/s/AKfycbx7XdHYVI8WA7pt9syFjKNIFpMl4W4v_7Ww9FuiytcIJErfhvHDHhsRm75Ep5jH-sjMUw/exec";
+      const scriptURL = "https://script.google.com/macros/s/AKfycbzdgqFy4ogBuaSGJF45M2PKwUiMGVP7KvjIlfkWA9yDSURii_nNLcueqq14Rz9x_pLR/exec";
 
 
       try {
@@ -29,7 +29,7 @@
         const meaning = await response.text();
 
         document.getElementById('loading').style.display = "none";
-        if (meaning.trim() === "" || meaning.toLowerCase() === "Word not found") {
+        if (meaning.trim() === "" || meaning.toLowerCase() === "word not found") {
           document.getElementById('result').innerText = "Word not found.";
         } else {
           document.getElementById('result').innerText = meaning;
